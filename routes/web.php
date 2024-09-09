@@ -46,6 +46,8 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
 
     // Masters
     Route::resource('wards', App\Http\Controllers\Admin\Masters\WardController::class);
+    Route::resource('letter-types', App\Http\Controllers\Admin\Masters\LetterTypesController::class);
+    Route::resource('departments', App\Http\Controllers\Admin\Masters\DepartmentController::class);
 
 
 

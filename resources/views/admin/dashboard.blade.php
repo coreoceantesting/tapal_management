@@ -4,7 +4,7 @@
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
     <div class="row">
-        <div class="col-xxl-5">
+        <div class="col-xxl-5 d-none">
             <div class="d-flex flex-column h-100">
                 <div class="row h-100">
                     <div class="col-12">
@@ -200,7 +200,7 @@
             </div>
         </div>
 
-        <div class="col-xxl-7">
+        <div class="col-xxl-7 d-none">
             <div class="row h-100">
                 <div class="col-xl-6">
                     <div class="card card-height-100">
