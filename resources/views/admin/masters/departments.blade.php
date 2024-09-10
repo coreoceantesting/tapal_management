@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Letter Types</x-slot>
-    <x-slot name="heading">Letter Types</x-slot>
+    <x-slot name="title">Departments</x-slot>
+    <x-slot name="heading">Departments</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,18 +12,18 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Add Letter Type</h4>
+                            <h4 class="card-title">Add Department</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="letter_type_name">Letter Type Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="letter_type_name" name="letter_type_name" type="text" placeholder="Enter Letter Type Name">
-                                    <span class="text-danger is-invalid letter_type_name_err"></span>
+                                    <label class="col-form-label" for="department_name">Department Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="department_name" name="department_name" type="text" placeholder="Enter Department Name">
+                                    <span class="text-danger is-invalid department_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Letter Type Initial">
+                                    <label class="col-form-label" for="initial">Department Initial <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial">
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>
@@ -47,19 +47,19 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Letter Type</h4>
+                            <h4 class="card-title">Edit Department</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="letter_type_name">Letter Type Name<span class="text-danger">*</span></label>
-                                    <input class="form-control" id="letter_type_name" name="letter_type_name" type="text" placeholder="Enter Letter Type Name">
-                                    <span class="text-danger is-invalid letter_type_name_err"></span>
+                                    <label class="col-form-label" for="department_name">Department Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="department_name" name="department_name" type="text" placeholder="Enter Department Name">
+                                    <span class="text-danger is-invalid department_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Letter Type Initial">
+                                    <label class="col-form-label" for="initial">Department Initial <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Department Initial">
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>
@@ -94,20 +94,20 @@
                                 <thead>
                                     <tr>
                                         <th>Sr.No</th>
-                                        <th>Name</th>
+                                        <th>Department Name</th>
                                         <th>Initial</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($letter_types as $index => $letter_type)
+                                    @foreach ($departments as $index => $department)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $letter_type->letter_type_name }}</td>
-                                            <td>{{ $letter_type->initial }}</td>
+                                            <td>{{ $department->department_name }}</td>
+                                            <td>{{ $department->initial }}</td>
                                             <td>
-                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $letter_type->id }}"><i data-feather="edit"></i></button>
-                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $letter_type->id }}"><i data-feather="trash-2"></i> </button>
+                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $department->id }}"><i data-feather="edit"></i></button>
+                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $department->id }}"><i data-feather="trash-2"></i> </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -132,7 +132,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('letter-types.store') }}',
+            url: '{{ route('departments.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -143,7 +143,7 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('letter-types.index') }}';
+                            window.location.href = '{{ route('departments.index') }}';
                         });
                 else
                     swal("Error!", data.error2, "error");
@@ -170,7 +170,7 @@
     $("#buttons-datatables").on("click", ".edit-element", function(e) {
         e.preventDefault();
         var model_id = $(this).attr("data-id");
-        var url = "{{ route('letter-types.edit', ":model_id") }}";
+        var url = "{{ route('departments.edit', ":model_id") }}";
 
         $.ajax({
             url: url.replace(':model_id', model_id),
@@ -184,9 +184,9 @@
                 
                 if (!data.error)
                 {
-                    $("#editForm input[name='edit_model_id']").val(data.letter_type.id);
-                    $("#editForm input[name='letter_type_name']").val(data.letter_type.letter_type_name);
-                    $("#editForm input[name='initial']").val(data.letter_type.initial);
+                    $("#editForm input[name='edit_model_id']").val(data.department.id);
+                    $("#editForm input[name='department_name']").val(data.department.department_name);
+                    $("#editForm input[name='initial']").val(data.department.initial);
                 }
                 else
                 {
@@ -210,7 +210,7 @@
             var formdata = new FormData(this);
             formdata.append('_method', 'PUT');
             var model_id = $('#edit_model_id').val();
-            var url = "{{ route('letter-types.update', ":model_id") }}";
+            var url = "{{ route('departments.update', ":model_id") }}";
             //
             $.ajax({
                 url: url.replace(':model_id', model_id),
@@ -224,7 +224,7 @@
                     if (!data.error2)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
-                                window.location.href = '{{ route('letter-types.index') }}';
+                                window.location.href = '{{ route('departments.index') }}';
                             });
                     else
                         swal("Error!", data.error2, "error");
@@ -252,7 +252,7 @@
     $("#buttons-datatables").on("click", ".rem-element", function(e) {
         e.preventDefault();
         swal({
-            title: "Are you sure to delete this letter type?",
+            title: "Are you sure to delete this department?",
             // text: "Make sure if you have filled Vendor details before proceeding further",
             icon: "info",
             buttons: ["Cancel", "Confirm"]
@@ -262,7 +262,7 @@
             if (justTransfer)
             {
                 var model_id = $(this).attr("data-id");
-                var url = "{{ route('letter-types.destroy', ":model_id") }}";
+                var url = "{{ route('departments.destroy', ":model_id") }}";
 
                 $.ajax({
                     url: url.replace(':model_id', model_id),
