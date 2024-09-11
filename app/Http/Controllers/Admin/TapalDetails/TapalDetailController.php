@@ -127,4 +127,27 @@ class TapalDetailController extends Controller
             return $this->respondWithAjax($e, 'deleting', 'Tapal detail');
         }
     }
+
+    public function report(Request $request)
+    {
+        $selected_letter_type = $request->input('letter_type');
+        $query = TapalDetail::join('letter_types','letter_types.id', '=', 'tapal_details.letter_type')
+        ->join('departments','departments.id', '=', 'tapal_details.department');
+        
+        if($selected_letter_type){
+            $query->where('tapal_details.letter_type', '=', $selected_letter_type);
+        }
+
+        $tapal_detail = $query->select('tapal_details.*', 'letter_types.letter_type_name', 'departments.department_name')
+        ->orderBy('tapal_details.id', 'desc')
+        ->get();
+        $letter_type_list = LetterType::latest()->get();
+        $department_list = Department::latest()->get();
+
+        return view('admin.reports.report')->with([
+            'tapal_detail'=> $tapal_detail,
+            'letter_type_list'=> $letter_type_list,
+            'department_list'=> $department_list,
+        ]);
+    }
 }

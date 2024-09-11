@@ -4,13 +4,32 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cookie;
+use App\Models\TapalDetail;
+use App\Models\LetterType;
+use App\Models\Department;
 
 class DashboardController extends Controller
 {
 
     public function index()
     {
-        return view('admin.dashboard');
+        $letter_type_list = LetterType::latest()->get();
+        $post_count = TapalDetail::latest()->get();
+        $letter_list = [];
+        foreach($letter_type_list as $list)
+        {
+            foreach($post_count as $count)
+            {
+                if($list->id == $count->letter_type)
+                {
+                    $letter_list[$list->letter_type_name]['count'][] = TapalDetail::where('letter_type', '=', $list->id)->count();
+                }
+            }
+        }
+        // dd($letter_list);
+        return view('admin.dashboard')->with([
+            'letter_list'=> $letter_list
+        ]);
     }
 
     public function changeThemeMode()

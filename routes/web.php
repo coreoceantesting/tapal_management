@@ -49,6 +49,7 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
     Route::resource('letter-types', App\Http\Controllers\Admin\Masters\LetterTypesController::class);
     Route::resource('departments', App\Http\Controllers\Admin\Masters\DepartmentController::class);
     Route::resource('tapal-details', App\Http\Controllers\Admin\TapalDetails\TapalDetailController::class);
+    Route::get('report', [App\Http\Controllers\Admin\TapalDetails\TapalDetailController::class, 'report'])->name('report');
 
 
 
