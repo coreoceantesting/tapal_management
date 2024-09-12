@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Masters\LetterTypes;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreLetterTypeRequest extends FormRequest
 {
@@ -22,7 +23,10 @@ class StoreLetterTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'letter_type_name' => 'required|unique:letter_types,letter_type_name',
+            'letter_type_name' => [
+                'required',
+                Rule::unique('letter_types')->whereNull('deleted_at')
+            ],
             'initial' => 'required',
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Masters\Departments;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreDepartmentRequest extends FormRequest
 {
@@ -22,7 +23,10 @@ class StoreDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'department_name' => 'required|unique:departments,department_name',
+            'department_name' => [
+                'required',
+                Rule::unique('departments')->whereNull('deleted_at')
+            ],
             'initial' => 'required',
         ];
     }
