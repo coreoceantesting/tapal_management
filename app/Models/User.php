@@ -23,7 +23,9 @@ class User extends Authenticatable
         'email',
         'mobile',
         'password',
-        'non_encrypt_password'
+        'non_encrypt_password',
+        'deleted_at',
+        'deleted_by'
     ];
 
     /**

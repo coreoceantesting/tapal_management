@@ -64,7 +64,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="referance_no">Referance No <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="referance_no">Reference No <span class="text-danger">*</span></label>
                                     <input class="form-control" id="referance_no" name="referance_no" type="text" placeholder="Enter Referance No">
                                     <span class="text-danger is-invalid referance_no_err"></span>
                                 </div>
@@ -149,7 +149,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="referance_no">Referance No <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="referance_no">Reference No <span class="text-danger">*</span></label>
                                     <input class="form-control" id="referance_no" name="referance_no" type="text" placeholder="Enter Referance No">
                                     <span class="text-danger is-invalid referance_no_err"></span>
                                 </div>
@@ -197,7 +197,7 @@
                                         <th>Name</th>
                                         <th>Letter Type</th>
                                         <th>Department</th>
-                                        <th>Referance No</th>
+                                        <th>Reference No</th>
                                         <th>Barcode No</th>
                                         <th>Action</th>
                                     </tr>

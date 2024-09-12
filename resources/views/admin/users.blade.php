@@ -198,6 +198,7 @@
                                             <button class="edit-element btn text-primary px-2 py-1" title="Edit User" data-id="{{ $user->id }}"><i data-feather="edit"></i></button>
                                             <button class="btn text-primary change-password px-2 py-1" title="Change Password" data-id="{{ $user->id }}"><i data-feather="lock"></i></button>
                                             <button class="btn text-warning assign-role px-2 py-1" title="Assign Role" data-id="{{ $user->id }}"><i data-feather="user-check"></i></button>
+                                            <button class="btn text-danger rem-element px-2 py-1" title="Delete user" data-id="{{ $user->id }}"><i data-feather="trash-2"></i> </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -697,5 +698,52 @@
             });
         }
 
+    });
+</script>
+
+<!-- Delete -->
+<script>
+    $("#buttons-datatables").on("click", ".rem-element", function(e) {
+        e.preventDefault();
+        swal({
+            title: "Are you sure to delete this User Detail?",
+            // text: "Make sure if you have filled Vendor details before proceeding further",
+            icon: "info",
+            buttons: ["Cancel", "Confirm"]
+        })
+        .then((justTransfer) =>
+        {
+            if (justTransfer)
+            {
+                var model_id = $(this).attr("data-id");
+                var url = "{{ route('users.destroy', ":model_id") }}";
+
+                $.ajax({
+                    url: url.replace(':model_id', model_id),
+                    type: 'POST',
+                    data: {
+                        '_method': "DELETE",
+                        '_token': "{{ csrf_token() }}"
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (!data.error && !data.error2) {
+                            swal("Success!", data.success, "success")
+                                .then((action) => {
+                                    window.location.reload();
+                                });
+                        } else {
+                            if (data.error) {
+                                swal("Error!", data.error, "error");
+                            } else {
+                                swal("Error!", data.error2, "error");
+                            }
+                        }
+                    },
+                    error: function(error, jqXHR, textStatus, errorThrown) {
+                        swal("Error!", "Something went wrong", "error");
+                    },
+                });
+            }
+        });
     });
 </script>

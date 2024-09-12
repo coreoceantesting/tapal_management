@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::whereNot('id', Auth::user()->id)->latest()->get();
+        $users = User::whereNot('id', Auth::user()->id)->whereNull('deleted_by')->latest()->get();
         $roles = Role::orderBy('id', 'DESC')->whereNot('name', 'like', '%super%')->get();
 
         return view('admin.users')->with(['users'=> $users, 'roles'=> $roles]);
@@ -126,9 +126,22 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        try
+        {
+            DB::beginTransaction();
+            $input['deleted_by'] = auth()->user()->id; 
+            $input['deleted_at'] = now();
+            $user->update($input);
+            DB::commit();
+
+            return response()->json(['success'=> 'Tapal detail updated successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'updating', 'Tapal detail');
+        }
     }
 
     public function toggle(Request $request, User $user)
