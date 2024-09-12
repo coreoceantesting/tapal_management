@@ -47,6 +47,7 @@ class UserController extends Controller
         {
             DB::beginTransaction();
             $input = $request->validated();
+            $input['non_encrypt_password'] = $input['password'];
             $input['password'] = Hash::make($input['password']);
             $user = User::create( Arr::only( $input, Auth::user()->getFillable() ) );
             DB::table('model_has_roles')->insert(['role_id'=> $input['role'], 'model_type'=> 'App\Models\User', 'model_id'=> $user->id]);

@@ -142,6 +142,9 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <div class="float-end">
+                                        <a id="forgot-password" style="cursor: pointer" class="text-dark">Forgot password?</a>
+                                    </div>
                                     <label class="form-label" for="password-input">Password (पासवर्ड)</label>
                                     <div class="input-group mb-3">
                                         <input type="password" class="form-control password-input" placeholder="Enter password" id="password" name="password">
@@ -157,6 +160,31 @@
                                     {{-- <p class="mt-3">Don't Have An Account ? <a class="text-primary signUp" style="cursor: pointer;"> Signup </a> </small> --}}
                                 </div>
                             </form>
+                            <!-- Forgot Password Modal -->
+                            <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-white text-dark">
+                                            <h5 class="modal-title text-dark" id="forgotPasswordModalLabel">Forgot Password</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body bg-white">
+                                            <form id="forgotPasswordForm">
+                                                @csrf
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email Address</label>
+                                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary">Send Password</button>
+                                                    <button type="submit" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary">Close</button>
+                                                </div>
+                                                <div id="forgotPasswordMessage" class="mt-3"></div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -262,6 +290,38 @@
                     icon.classList.remove('fa-eye-slash');
                     icon.classList.add('fa-eye');
                 }
+            });
+        </script>
+
+        {{-- Forgot password --}}
+        <script>
+            $(document).ready(function() {
+                // Show modal when "Forgot password?" link is clicked
+                $('#forgot-password').on('click', function(e) {
+                    e.preventDefault();
+                    $('#forgotPasswordModal').modal('show');
+                });
+
+                // Handle form submission
+                $('#forgotPasswordForm').submit(function(e) {
+                    e.preventDefault();
+                    var formdata = new FormData(this);
+
+                    $.ajax({
+                        url: '{{ route('password.email') }}',
+                        type: 'POST',
+                        data: formdata,
+                        contentType: false,
+                        processData: false,
+                        success: function(data) {
+                            $('#forgotPasswordMessage').html('<div class="alert alert-success">Password has been sent to your email.</div>');
+                            $('#forgotPasswordForm')[0].reset(); // Reset form
+                        },
+                        error: function(error) {
+                            $('#forgotPasswordMessage').html('<div class="alert alert-danger">Error: ' + error.responseJSON.message + '</div>');
+                        }
+                    });
+                });
             });
         </script>
     </body>

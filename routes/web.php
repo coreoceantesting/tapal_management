@@ -26,6 +26,7 @@ Route::middleware(['guest', 'PreventBackHistory', 'firewall.all'])->group(functi
     Route::post('login', [App\Http\Controllers\Admin\AuthController::class, 'login'])->name('signin');
     Route::get('register', [App\Http\Controllers\Admin\AuthController::class, 'showRegister'])->name('register');
     Route::post('register', [App\Http\Controllers\Admin\AuthController::class, 'register'])->name('signup');
+    Route::post('password/email', [App\Http\Controllers\Admin\AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 });
 
 
