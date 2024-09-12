@@ -18,15 +18,16 @@ class DashboardController extends Controller
         $letter_list = [];
         foreach($letter_type_list as $list)
         {
+            $letter_list[$list->letter_type_name]['count'] = 0;
             foreach($post_count as $count)
             {
                 if($list->id == $count->letter_type)
                 {
-                    $letter_list[$list->letter_type_name]['count'][] = TapalDetail::where('letter_type', '=', $list->id)->count();
+                    $letter_list[$list->letter_type_name]['count'] = TapalDetail::where('letter_type', '=', $list->id)->count();
                 }
             }
         }
-        // dd($letter_list);
+        
         return view('admin.dashboard')->with([
             'letter_list'=> $letter_list
         ]);

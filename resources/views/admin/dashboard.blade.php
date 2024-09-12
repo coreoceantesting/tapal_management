@@ -64,7 +64,7 @@
                                                 {{ $index }}
                                             </p>
                                             <h2 class="mt-4 ff-secondary fw-semibold">
-                                                <span class="counter-value" data-target="{{ $list['count'][0] }}">{{ $list['count'][0] }}</span>
+                                                <span class="counter-value" data-target="{{ $list['count'] }}">{{ $list['count'] }}</span>
                                             </h2>
                                             <p class="mb-0 text-muted d-none">
                                                 <span class="badge bg-light text-success mb-0"><i class="ri-arrow-up-line align-middle"></i>
