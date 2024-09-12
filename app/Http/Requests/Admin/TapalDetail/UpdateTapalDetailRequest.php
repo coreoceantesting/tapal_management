@@ -27,7 +27,7 @@ class UpdateTapalDetailRequest extends FormRequest
             'name' => 'required|alpha',
             'city' => 'required|alpha',
             'address' => 'required',
-            'pin' => 'required|digit:6',
+            'pin' => 'required|digits:6',
             'referance_no' => 'required',
             'barcode_no' => 'required',
         ];
