@@ -94,6 +94,32 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'wards.delete',
                 'group' => 'wards',
             ],
+            [
+                'id' => 17,
+                'name' => 'masters.all',
+                'group' => 'Masters',
+            ],
+            [
+                'id' => 18,
+                'name' => 'tapaldetail.add',
+                'group' => 'TapalDetails',
+            ],
+            [
+                'id' => 19,
+                'name' => 'tapaldetail.edit',
+                'group' => 'TapalDetails',
+            ],
+            [
+                'id' => 20,
+                'name' => 'tapaldetail.delete',
+                'group' => 'TapalDetails',
+            ],
+            [
+                'id' => 21,
+                'name' => 'tapaldetail.report',
+                'group' => 'TapalDetails',
+            ],
+
         ];
 
         foreach ($permissions as $permission)
