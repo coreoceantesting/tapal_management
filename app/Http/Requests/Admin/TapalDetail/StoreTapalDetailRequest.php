@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\TapalDetail;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreTapalDetailRequest extends FormRequest
 {
@@ -28,8 +29,16 @@ class StoreTapalDetailRequest extends FormRequest
             'address' => 'required',
             'city' => 'required',
             'pin' => 'required',
-            'referance_no' => 'required',
-            'barcode_no' => 'required',
+            'referance_no' => [
+                'required',
+                Rule::unique('tapal_details')->whereNull('deleted_at')
+            ],
+            'barcode_no' => [
+                'required',
+                Rule::unique('tapal_details')->whereNull('deleted_at')
+            ],
+            // 'referance_no' => 'required',
+            // 'barcode_no' => 'required',
         ];
     }
 }
