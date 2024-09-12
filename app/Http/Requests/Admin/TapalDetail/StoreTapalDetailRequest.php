@@ -25,10 +25,10 @@ class StoreTapalDetailRequest extends FormRequest
         return [
             'letter_type' => 'required',
             'department' => 'required',
-            'name' => 'required',
+            'name' => 'required|alpha',
+            'city' => 'required|alpha',
             'address' => 'required',
-            'city' => 'required',
-            'pin' => 'required',
+            'pin' => 'required|digit:6',
             'referance_no' => [
                 'required',
                 Rule::unique('tapal_details')->whereNull('deleted_at')
