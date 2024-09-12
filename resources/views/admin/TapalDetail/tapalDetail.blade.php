@@ -176,16 +176,18 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="">
-                                    <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
-                                    <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
+                    @can(['tapaldetail.add'])
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="">
+                                        <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+                                        <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endcan
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="buttons-datatables" class="table table-bordered nowrap align-middle" style="width:100%">
@@ -210,8 +212,12 @@
                                             <td>{{ $list->referance_no }}</td>
                                             <td>{{ $list->barcode_no }}</td>
                                             <td>
-                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $list->id }}"><i data-feather="edit"></i></button>
-                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->id }}"><i data-feather="trash-2"></i> </button>
+                                                @can(['tapaldetail.edit'])
+                                                    <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $list->id }}"><i data-feather="edit"></i></button>
+                                                @endcan
+                                                @can(['tapaldetail.delete'])
+                                                    <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->id }}"><i data-feather="trash-2"></i> </button>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach

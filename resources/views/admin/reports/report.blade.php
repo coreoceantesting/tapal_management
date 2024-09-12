@@ -36,7 +36,7 @@
                                     <th>Department</th>
                                     <th>Referance No</th>
                                     <th>Barcode No</th>
-                                    <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,10 +48,10 @@
                                         <td>{{ $list->department_name }}</td>
                                         <td>{{ $list->referance_no }}</td>
                                         <td>{{ $list->barcode_no }}</td>
-                                        <td>
+                                        {{-- <td>
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $list->id }}"><i data-feather="edit"></i></button>
                                             <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->id }}"><i data-feather="trash-2"></i> </button>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                         </table>
