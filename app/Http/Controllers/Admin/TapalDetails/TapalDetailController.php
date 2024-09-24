@@ -19,18 +19,27 @@ class TapalDetailController extends Controller
      */
     public function index()
     {
-        $tapal_detail = TapalDetail::join('letter_types','letter_types.id', '=', 'tapal_details.letter_type')
-        ->join('departments','departments.id', '=', 'tapal_details.department')
-        ->select('tapal_details.*', 'letter_types.letter_type_name', 'departments.department_name')
-        ->orderBy('tapal_details.id', 'desc')
-        ->get();
+        // Start building the query
+        $tapal_detail_query = TapalDetail::join('letter_types', 'letter_types.id', '=', 'tapal_details.letter_type')
+            ->join('departments', 'departments.id', '=', 'tapal_details.department')
+            ->select('tapal_details.*', 'letter_types.letter_type_name', 'departments.department_name')
+            ->orderBy('tapal_details.id', 'desc');
+        
+        if ( auth()->user()->roles->pluck('name')[0] == 'Department' ) {
+            $tapal_detail_query->where('tapal_details.department', auth()->user()->department);
+        }
+
+        
+        $tapal_detail = $tapal_detail_query->get();
+        
+        
         $letter_type_list = LetterType::latest()->get();
         $department_list = Department::latest()->get();
 
         return view('admin.TapalDetail.tapalDetail')->with([
-            'tapal_detail'=> $tapal_detail,
-            'letter_type_list'=> $letter_type_list,
-            'department_list'=> $department_list,
+            'tapal_detail' => $tapal_detail,
+            'letter_type_list' => $letter_type_list,
+            'department_list' => $department_list,
         ]);
     }
 
@@ -131,23 +140,45 @@ class TapalDetailController extends Controller
     public function report(Request $request)
     {
         $selected_letter_type = $request->input('letter_type');
-        $query = TapalDetail::join('letter_types','letter_types.id', '=', 'tapal_details.letter_type')
-        ->join('departments','departments.id', '=', 'tapal_details.department');
+        $start_date = $request->input('fromdate');
+        $end_date = $request->input('todate');
+        $start_datetime = $start_date . ' 00:00:00';
+        $end_datetime = $end_date . ' 23:59:59';
+
         
-        if($selected_letter_type){
+        $query = TapalDetail::join('letter_types', 'letter_types.id', '=', 'tapal_details.letter_type')
+            ->join('departments', 'departments.id', '=', 'tapal_details.department');
+
+        
+        if ($selected_letter_type) {
             $query->where('tapal_details.letter_type', '=', $selected_letter_type);
         }
 
+        
+        if (!empty($start_date) && !empty($end_date)) {
+            $query->whereBetween('tapal_details.created_at', [$start_datetime, $end_datetime]);
+        }
+
+        
+        if (auth()->user()->roles->pluck('name')[0] == 'Department') {
+            $query->where('tapal_details.department', '=', auth()->user()->department);
+        }
+
+        // Execute the query and get the results
         $tapal_detail = $query->select('tapal_details.*', 'letter_types.letter_type_name', 'departments.department_name')
-        ->orderBy('tapal_details.id', 'desc')
-        ->get();
+            ->orderBy('tapal_details.id', 'desc')
+            ->get();
+
+        // Fetch the letter type and department lists
         $letter_type_list = LetterType::latest()->get();
         $department_list = Department::latest()->get();
 
+        // Return the view with the required data
         return view('admin.reports.report')->with([
-            'tapal_detail'=> $tapal_detail,
-            'letter_type_list'=> $letter_type_list,
-            'department_list'=> $department_list,
+            'tapal_detail' => $tapal_detail,
+            'letter_type_list' => $letter_type_list,
+            'department_list' => $department_list,
         ]);
     }
+
 }

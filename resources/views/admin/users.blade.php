@@ -48,6 +48,17 @@
                                 <span class="text-danger is-invalid role_err"></span>
                             </div>
 
+                            <div class="col-md-4 mt-3 department-section" style="display: none;">
+                                <label class="col-form-label" for="department">Select Department <span class="text-danger">*</span></label>
+                                <select class="form-control" id="department" name="department">
+                                    <option value="">--Select Department--</option>
+                                    @foreach ($departments as $department)
+                                        <option value="{{ $department->id }}">{{ $department->department_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid department_err"></span>
+                            </div>
+
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="password-input">Password <span class="text-danger">*</span></label>
                                 <div class="input-group">
@@ -135,6 +146,17 @@
                                     @endforeach
                                 </select>
                                 <span class="text-danger is-invalid role_err"></span>
+                            </div>
+
+                            <div class="col-md-4 mt-3">
+                                <label class="col-form-label" for="department">Select Department <span class="text-danger">*</span></label>
+                                <select class="form-control" id="department" name="department">
+                                    <option value="">--Select Department--</option>
+                                    @foreach ($departments as $department)
+                                        <option value="{{ $department->id }}">{{ $department->department_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid department_err"></span>
                             </div>
 
                         </div>
@@ -549,6 +571,7 @@
                     $("#editForm input[name='name']").val(data.user.name);
                     $("#editForm input[name='email']").val(data.user.email);
                     $("#editForm input[name='mobile']").val(data.user.mobile);
+                    $("#editForm select[name='department']").val(data.user.department);
                     $("#editForm select[name='ward_id']").html(data.wardHtml);
                 } else {
                     swal("Error!", data.error, "error");
@@ -746,4 +769,24 @@
             }
         });
     });
+</script>
+
+
+{{-- hide show department section --}}
+<script>
+    $(document).ready(function() {
+
+        $('#role').on('change', function() {
+            
+            var roleType = $(this).val();
+
+            if (roleType === '3') {
+                $('.department-section').show();
+            } else {
+                $('.department-section').hide();
+                $('#department').val(''); 
+            }
+        });
+    });
+
 </script>

@@ -26,8 +26,9 @@ class UserController extends Controller
     {
         $users = User::whereNot('id', Auth::user()->id)->whereNull('deleted_by')->latest()->get();
         $roles = Role::orderBy('id', 'DESC')->whereNot('name', 'like', '%super%')->get();
+        $departments = Department::latest()->get();
 
-        return view('admin.users')->with(['users'=> $users, 'roles'=> $roles]);
+        return view('admin.users')->with(['users'=> $users, 'roles'=> $roles, 'departments' => $departments]);
     }
 
     /**

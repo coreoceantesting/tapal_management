@@ -18,6 +18,14 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-md-3">
+                                <label for="status" class="control-label">From Date</label>
+                                <input type="date" id="fromdate" name="fromdate" class="form-control" @if(request('fromdate')) value="{{ request('fromdate') }}" @endif>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="status" class="control-label">To Date</label>
+                                <input type="date" id="todate" name="todate" class="form-control" @if(request('todate')) value="{{ request('todate') }}" @endif>
+                            </div>
                             <div class="col-md-3" style="margin-top: 28px;">
                                 <button type="submit" id="apply-filter" class="btn btn-primary">Search</button>
                                 <a class="btn btn-success" href="{{ route('report') }}">Clear</a>
