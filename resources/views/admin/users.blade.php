@@ -42,7 +42,7 @@
                                 <select class="js-example-basic-single col-sm-12" id="role" name="role">
                                     <option value="">--Select Role--</option>
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        <option value="{{ $role->id }}" data-role-type="{{ $role->name == 'Department' ? 'department' : '' }}">{{ $role->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-danger is-invalid role_err"></span>
@@ -775,12 +775,13 @@
 {{-- hide show department section --}}
 <script>
     $(document).ready(function() {
-
+        
         $('#role').on('change', function() {
             
-            var roleType = $(this).val();
+            var roleType = $(this).find('option:selected').data('role-type');
 
-            if (roleType === '3') {
+           
+            if (roleType === 'department') {
                 $('.department-section').show();
             } else {
                 $('.department-section').hide();
