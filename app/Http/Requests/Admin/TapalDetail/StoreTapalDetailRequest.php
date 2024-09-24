@@ -30,11 +30,11 @@ class StoreTapalDetailRequest extends FormRequest
             'address' => 'required',
             'pin' => 'required|digits:6',
             'referance_no' => [
-                'required',
+                'nullable',
                 Rule::unique('tapal_details')->whereNull('deleted_at')
             ],
             'barcode_no' => [
-                'required',
+                'nullable',
                 Rule::unique('tapal_details')->whereNull('deleted_at')
             ],
             // 'referance_no' => 'required',

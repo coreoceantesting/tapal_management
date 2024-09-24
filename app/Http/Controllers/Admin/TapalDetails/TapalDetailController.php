@@ -23,6 +23,7 @@ class TapalDetailController extends Controller
         $tapal_detail_query = TapalDetail::join('letter_types', 'letter_types.id', '=', 'tapal_details.letter_type')
             ->join('departments', 'departments.id', '=', 'tapal_details.department')
             ->select('tapal_details.*', 'letter_types.letter_type_name', 'departments.department_name')
+            ->where('tapal_details.status', '=', 'Pending')
             ->orderBy('tapal_details.id', 'desc');
         
         if ( auth()->user()->roles->pluck('name')[0] == 'Department' ) {
@@ -166,6 +167,7 @@ class TapalDetailController extends Controller
 
         // Execute the query and get the results
         $tapal_detail = $query->select('tapal_details.*', 'letter_types.letter_type_name', 'departments.department_name')
+            ->where('tapal_details.status', 'Approved')
             ->orderBy('tapal_details.id', 'desc')
             ->get();
 
@@ -179,6 +181,23 @@ class TapalDetailController extends Controller
             'letter_type_list' => $letter_type_list,
             'department_list' => $department_list,
         ]);
+    }
+
+    public function approveTapalDetails($id)
+    {
+        try {
+
+            $details = TapalDetail::findOrFail($id);
+            $details->update([
+                'status' => 'Approved',
+                'approval_by' => auth()->user()->id,
+                'approval_at' => now()
+            ]);
+
+            return response()->json(['success' => 'Tapal details approved successfully!']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error approving tenant.'], 500);
+        }
     }
 
 }

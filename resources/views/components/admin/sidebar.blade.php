@@ -101,7 +101,7 @@
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="{{ route('report') }}" >
                             <i class="ri-file-list-line"></i>
-                            <span data-key="t-dashboards">Tapal List</span>
+                            <span data-key="t-dashboards">Accepted Tapal List</span>
                         </a>
                     </li>
                 @endcan

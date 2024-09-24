@@ -21,6 +21,10 @@ class TapalDetail extends Model
         'referance_no',
         'barcode_no',
         'unique_id',
+        'status',
+        'approval_by',
+        'approval_at',
+        'approval_remark'
     ];
 
     public static function booted()

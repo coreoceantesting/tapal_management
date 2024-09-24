@@ -28,8 +28,8 @@ class UpdateTapalDetailRequest extends FormRequest
             'city' => 'required|alpha',
             'address' => 'required',
             'pin' => 'required|digits:6',
-            'referance_no' => 'required',
-            'barcode_no' => 'required',
+            'referance_no' => 'nullable',
+            'barcode_no' => 'nullable',
         ];
     }
 }

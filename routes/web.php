@@ -51,6 +51,7 @@ Route::middleware(['auth', 'PreventBackHistory', 'firewall.all'])->group(functio
     Route::resource('departments', App\Http\Controllers\Admin\Masters\DepartmentController::class);
     Route::resource('tapal-details', App\Http\Controllers\Admin\TapalDetails\TapalDetailController::class);
     Route::get('report', [App\Http\Controllers\Admin\TapalDetails\TapalDetailController::class, 'report'])->name('report');
+    Route::post('/approve-tapal-details/{tapal_detail_id}', [App\Http\Controllers\Admin\TapalDetails\TapalDetailController::class, 'approveTapalDetails'])->name('approveTapalDetails');
 
 
 

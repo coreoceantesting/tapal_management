@@ -63,13 +63,13 @@
                                     <span class="text-danger is-invalid pin_err"></span>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-4 ref-no">
                                     <label class="col-form-label" for="referance_no">Reference No <span class="text-danger">*</span></label>
                                     <input class="form-control" id="referance_no" name="referance_no" type="text" placeholder="Enter Referance No">
                                     <span class="text-danger is-invalid referance_no_err"></span>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-4 barcode-no">
                                     <label class="col-form-label" for="barcode_no">Barcode No <span class="text-danger">*</span></label>
                                     <input class="form-control" id="barcode_no" name="barcode_no" type="text" placeholder="Enter Barcode No">
                                     <span class="text-danger is-invalid barcode_no_err"></span>
@@ -148,15 +148,15 @@
                                     <span class="text-danger is-invalid pin_err"></span>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-4 ref-no-edit">
                                     <label class="col-form-label" for="referance_no">Reference No <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="referance_no" name="referance_no" type="text" placeholder="Enter Referance No">
+                                    <input class="form-control" id="referance_no_edit" name="referance_no" type="text" placeholder="Enter Referance No">
                                     <span class="text-danger is-invalid referance_no_err"></span>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-4 barcode-no-edit">
                                     <label class="col-form-label" for="barcode_no">Barcode No <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="barcode_no" name="barcode_no" type="text" placeholder="Enter Barcode No">
+                                    <input class="form-control" id="barcode_no_edit" name="barcode_no" type="text" placeholder="Enter Barcode No">
                                     <span class="text-danger is-invalid barcode_no_err"></span>
                                 </div>
 
@@ -209,14 +209,17 @@
                                             <td>{{ $list->name }}</td>
                                             <td>{{ $list->letter_type_name }}</td>
                                             <td>{{ $list->department_name }}</td>
-                                            <td>{{ $list->referance_no }}</td>
-                                            <td>{{ $list->barcode_no }}</td>
+                                            <td>{{ $list->referance_no ?? 'NA' }}</td>
+                                            <td>{{ $list->barcode_no ?? 'NA' }}</td>
                                             <td>
+                                                @if (auth()->user()->roles->pluck('name')[0] == "Admin" || auth()->user()->roles->pluck('name')[0] == "Super Admin")
+                                                    <button class="accept-element btn btn-sm btn-primary px-2 py-1" title="Accept" data-id="{{ $list->id }}">Approve</button>
+                                                @endif
                                                 @can(['tapaldetail.edit'])
-                                                    <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $list->id }}"><i data-feather="edit"></i></button>
+                                                    <button class="edit-element btn text-secondary px-2 py-1" title="Edit form" data-id="{{ $list->id }}"><i data-feather="edit"></i></button>
                                                 @endcan
                                                 @can(['tapaldetail.delete'])
-                                                    <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->id }}"><i data-feather="trash-2"></i> </button>
+                                                    <button class="btn text-danger rem-element px-2 py-1" title="Delete form" data-id="{{ $list->id }}"><i data-feather="trash-2"></i> </button>
                                                 @endcan
                                             </td>
                                         </tr>
@@ -303,6 +306,17 @@
                     $("#editForm input[name='pin']").val(data.tapal_detail.pin);
                     $("#editForm input[name='referance_no']").val(data.tapal_detail.referance_no);
                     $("#editForm input[name='barcode_no']").val(data.tapal_detail.barcode_no);
+                    
+                    var letterType = $("#editForm select[name='letter_type'] option:selected").text();
+
+                    if (letterType === "Ordinary") {
+                        $(".ref-no-edit").hide();
+                        $(".barcode-no-edit").hide();
+                    } else {
+                        $(".ref-no-edit").show();
+                        $(".barcode-no-edit").show();
+                    }
+                    
                 }
                 else
                 {
@@ -406,6 +420,90 @@
                     },
                 });
             }
+        });
+    });
+</script>
+
+{{-- accept --}}
+
+<script>
+    $(".accept-element").on("click", function(e) {
+        e.preventDefault();
+        swal({
+            title: "Are you sure to approve this Tapal details?",
+            icon: "info",
+            buttons: ["Cancel", "Confirm"]
+        })
+        .then((willApprove) => {
+            if (willApprove) {
+                var model_id = $(this).data("id"); // Assuming you have data-id attribute on the button
+                var url = "{{ route('approveTapalDetails', ":model_id") }}";
+
+                $.ajax({
+                    url: url.replace(':model_id', model_id),
+                    type: 'POST',
+                    data: {
+                        '_token': "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            swal("Success!", data.success, "success")
+                                .then(() => {
+                                    window.location.reload();
+                                });
+                        } else {
+                            swal("Error!", data.error, "error");
+                        }
+                    },
+                    error: function(error) {
+                        swal("Error!", "Something went wrong", "error");
+                    },
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        function toggleReferenceFields() {
+            var letterType = $("#letter_type option:selected").text();
+
+            if (letterType === "Ordinary") {
+                $(".ref-no").hide();
+                $(".barcode-no").hide();
+            } else {
+                $(".ref-no").show();
+                $(".barcode-no").show();
+            }
+        }
+
+        // toggleReferenceFields();
+        $("#letter_type").change(function() {
+            toggleReferenceFields();
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        function edittoggleReferenceFields() {
+            var letterType = $("#editForm select[name='letter_type'] option:selected").text();
+
+            if (letterType === "Ordinary") {
+                $(".ref-no-edit").hide();
+                $(".barcode-no-edit").hide();
+            } else {
+                $(".ref-no-edit").show();
+                $(".barcode-no-edit").show();
+                $("#barcode_no_edit").val('');
+                $("#referance_no_edit").val('');
+            }
+        }
+
+        // toggleReferenceFields();
+        $("#editForm select[name='letter_type']").change(function() {
+            edittoggleReferenceFields();
         });
     });
 </script>
