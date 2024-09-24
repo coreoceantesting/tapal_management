@@ -139,7 +139,7 @@
 
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label">Select User Type / Role <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-single col-sm-12" name="role">
+                                <select class="js-example-basic-single col-sm-12 role-edit" name="role">
                                     <option value="">--Select Role--</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -148,9 +148,9 @@
                                 <span class="text-danger is-invalid role_err"></span>
                             </div>
 
-                            <div class="col-md-4 mt-3">
+                            <div class="col-md-4 mt-3 department-edit">
                                 <label class="col-form-label" for="department">Select Department <span class="text-danger">*</span></label>
-                                <select class="form-control" id="department" name="department">
+                                <select class="form-control department-field" id="department" name="department">
                                     <option value="">--Select Department--</option>
                                     @foreach ($departments as $department)
                                         <option value="{{ $department->id }}">{{ $department->department_name }}</option>
@@ -194,7 +194,7 @@
                                     <th>Full Name</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
-                                    {{-- <th style="min-width: 100px;">Status</th> --}}
+                                    <th>Department Name</th>
                                     <th>Registered On</th>
                                     <th>Action</th>
                                 </tr>
@@ -206,6 +206,7 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->mobile }}</td>
+                                        <td>{{ $user->department_name ?? 'NA' }}</td>
                                         {{-- <td>
                                             <div class="media-body text-end icon-state">
                                                 <label class="switch">
@@ -573,6 +574,15 @@
                     $("#editForm input[name='mobile']").val(data.user.mobile);
                     $("#editForm select[name='department']").val(data.user.department);
                     $("#editForm select[name='ward_id']").html(data.wardHtml);
+
+                    var role = $("#editForm select[name='role'] option:selected").text();
+
+                    if (role === "Department") {
+                        $(".department-edit").show();
+                    } else {
+                        $(".department-edit").hide();
+                    }
+
                 } else {
                     swal("Error!", data.error, "error");
                 }
@@ -786,6 +796,26 @@
             } else {
                 $('.department-section').hide();
                 $('#department').val(''); 
+            }
+        });
+    });
+
+</script>
+
+{{-- hide show department section  edit--}}
+<script>
+    $(document).ready(function() {
+        
+        $('.role-edit').on('change', function() {
+            
+            var roleType = $(this).find('option:selected').text();
+
+           
+            if (roleType === 'Department') {
+                $('.department-edit').show();
+            } else {
+                $('.department-edit').hide();
+                $('.department-field').val(''); 
             }
         });
     });
