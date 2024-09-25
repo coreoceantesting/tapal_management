@@ -45,7 +45,7 @@ class AuthController extends Controller
 
             try
             {
-                $user = User::where('email', $username)->first();
+                $user = User::where('email', $username)->whereNotNull('deleted_by')->first();
 
                 if(!$user)
                     return response()->json(['error2'=> 'No user found with this username']);
