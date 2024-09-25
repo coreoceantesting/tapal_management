@@ -65,13 +65,13 @@
 
                                 <div class="col-md-4 ref-no">
                                     <label class="col-form-label" for="referance_no">Reference No <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="referance_no" name="referance_no" type="text" placeholder="Enter Referance No">
+                                    <input class="form-control" id="referance_no" name="referance_no" type="text" placeholder="Enter Referance No" required>
                                     <span class="text-danger is-invalid referance_no_err"></span>
                                 </div>
 
                                 <div class="col-md-4 barcode-no">
                                     <label class="col-form-label" for="barcode_no">Barcode No <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="barcode_no" name="barcode_no" type="text" placeholder="Enter Barcode No">
+                                    <input class="form-control" id="barcode_no" name="barcode_no" type="text" placeholder="Enter Barcode No" required>
                                     <span class="text-danger is-invalid barcode_no_err"></span>
                                 </div>
 
@@ -150,13 +150,13 @@
 
                                 <div class="col-md-4 ref-no-edit">
                                     <label class="col-form-label" for="referance_no">Reference No <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="referance_no_edit" name="referance_no" type="text" placeholder="Enter Referance No">
+                                    <input class="form-control" id="referance_no_edit" name="referance_no" type="text" placeholder="Enter Referance No" required>
                                     <span class="text-danger is-invalid referance_no_err"></span>
                                 </div>
 
                                 <div class="col-md-4 barcode-no-edit">
                                     <label class="col-form-label" for="barcode_no">Barcode No <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="barcode_no_edit" name="barcode_no" type="text" placeholder="Enter Barcode No">
+                                    <input class="form-control" id="barcode_no_edit" name="barcode_no" type="text" placeholder="Enter Barcode No" required>
                                     <span class="text-danger is-invalid barcode_no_err"></span>
                                 </div>
 
@@ -472,13 +472,20 @@
             if (letterType === "Ordinary") {
                 $(".ref-no").hide();
                 $(".barcode-no").hide();
+
+                $("#referance_no").removeAttr('required');
+                $("#barcode_no").removeAttr('required');
             } else {
                 $(".ref-no").show();
                 $(".barcode-no").show();
+        
+                $("#referance_no").attr('required', 'required');
+                $("#barcode_no").attr('required', 'required');
             }
         }
 
-        // toggleReferenceFields();
+        toggleReferenceFields();
+
         $("#letter_type").change(function() {
             toggleReferenceFields();
         });
@@ -493,11 +500,15 @@
             if (letterType === "Ordinary") {
                 $(".ref-no-edit").hide();
                 $(".barcode-no-edit").hide();
+                $("#barcode_no_edit").removeAttr('required');
+                $("#referance_no_edit").removeAttr('required');
             } else {
                 $(".ref-no-edit").show();
                 $(".barcode-no-edit").show();
                 $("#barcode_no_edit").val('');
                 $("#referance_no_edit").val('');
+                $("#barcode_no_edit").attr('required', 'required');
+                $("#referance_no_edit").attr('required', 'required');
             }
         }
 
