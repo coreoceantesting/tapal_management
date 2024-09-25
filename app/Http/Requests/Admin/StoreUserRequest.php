@@ -26,8 +26,20 @@ class StoreUserRequest extends FormRequest
             'role' => 'required',
             'name' => 'required',
             'department' => 'nullable',
-            'email' => 'required|unique:users,email|email',
-            'mobile' => 'required|unique:users,mobile|digits:10',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->where(function ($query) {
+                    return $query->whereNull('deleted_at');
+                }),
+            ],
+            'mobile' => [
+                'required',
+                'digits:10',
+                Rule::unique('users')->where(function ($query) {
+                    return $query->whereNull('deleted_at');
+                }),
+            ],
             'password' => 'required|min:8',
             'confirm_password' => 'required|same:password',
         ];

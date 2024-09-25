@@ -19,7 +19,7 @@
                         <div class="mb-3 row">
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="name">User Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="name">Name <span class="text-danger">*</span></label>
                                 <input class="form-control" id="name" name="name" type="text" placeholder="Enter User Name">
                                 <span class="text-danger is-invalid name_err"></span>
                             </div>
@@ -119,7 +119,7 @@
                         <div class="mb-3 row">
 
                             <div class="col-md-4">
-                                <label class="col-form-label" for="name">User Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="name">Name <span class="text-danger">*</span></label>
                                 <input class="form-control" name="name" type="text" placeholder="Enter User Name">
                                 <span class="text-danger is-invalid name_err"></span>
                             </div>

@@ -25,8 +25,8 @@ class StoreTapalDetailRequest extends FormRequest
         return [
             'letter_type' => 'required',
             'department' => 'required',
-            'name' => 'required|alpha',
-            'city' => 'required|alpha',
+            'name' => 'required|regex:/^[a-zA-Z\s]+$/',
+            'city' => 'required|regex:/^[a-zA-Z\s]+$/',
             'address' => 'required',
             'pin' => 'required|digits:6',
             'referance_no' => [
