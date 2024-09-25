@@ -108,7 +108,9 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="">
-                                <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+                                @can(['roles.create'])
+                                    <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+                                @endcan
                                 <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
                             </div>
                         </div>
@@ -130,8 +132,12 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $role->name }}</td>
                                         <td>
-                                            <button class="edit-element btn text-secondary px-2 py-1" title="Edit Role" data-id="{{ $role->id }}"><i data-feather="edit"></i></button>
-                                            <button class="btn text-danger rem-element px-2 py-1" title="Delete Role" data-id="{{ $role->id }}"><i data-feather="trash-2"></i> </button>
+                                            @can(['roles.edit'])
+                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit Role" data-id="{{ $role->id }}"><i data-feather="edit"></i></button>
+                                            @endcan
+                                            @can(['roles.delete'])
+                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete Role" data-id="{{ $role->id }}"><i data-feather="trash-2"></i> </button>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
