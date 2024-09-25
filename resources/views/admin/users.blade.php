@@ -218,10 +218,22 @@
                                             {{ \Carbon\Carbon::parse($user->created_at)->format('d M, y h:i:s') }}
                                         </td>
                                         <td>
-                                            <button class="edit-element btn text-primary px-2 py-1" title="Edit User" data-id="{{ $user->id }}"><i data-feather="edit"></i></button>
-                                            <button class="btn text-primary change-password px-2 py-1" title="Change Password" data-id="{{ $user->id }}"><i data-feather="lock"></i></button>
-                                            <button class="btn text-warning assign-role px-2 py-1" title="Assign Role" data-id="{{ $user->id }}"><i data-feather="user-check"></i></button>
-                                            <button class="btn text-danger rem-element px-2 py-1" title="Delete user" data-id="{{ $user->id }}"><i data-feather="trash-2"></i> </button>
+                                            @can(['users.edit'])
+                                                <button class="edit-element btn text-primary px-2 py-1" title="Edit User" data-id="{{ $user->id }}"><i data-feather="edit"></i></button>                    
+                                            @endcan
+
+                                            @can(['users.delete'])
+                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete user" data-id="{{ $user->id }}"><i data-feather="trash-2"></i> </button>                                                
+                                            @endcan
+
+                                            @can(['roles.assign'])
+                                                <button class="btn text-warning assign-role px-2 py-1" title="Assign Role" data-id="{{ $user->id }}"><i data-feather="user-check"></i></button>                                                
+                                            @endcan
+
+                                            @can(['users.change_password'])
+                                                <button class="btn text-primary change-password px-2 py-1" title="Change Password" data-id="{{ $user->id }}"><i data-feather="lock"></i></button>
+                                            @endcan
+                                            
                                         </td>
                                     </tr>
                                 @endforeach
