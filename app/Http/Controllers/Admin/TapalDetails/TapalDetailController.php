@@ -180,6 +180,7 @@ class TapalDetailController extends Controller
             'tapal_detail' => $tapal_detail,
             'letter_type_list' => $letter_type_list,
             'department_list' => $department_list,
+            'selected_letter_type' => $selected_letter_type
         ]);
     }
 
