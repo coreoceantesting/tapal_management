@@ -65,7 +65,7 @@
 
                                 <div class="col-md-4 ref-no">
                                     <label class="col-form-label" for="referance_no">Reference No <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="referance_no" name="referance_no" type="text" placeholder="Enter Referance No" required>
+                                    <input class="form-control" id="referance_no" name="referance_no" type="text" placeholder="Enter Referance No">
                                     <span class="text-danger is-invalid referance_no_err"></span>
                                 </div>
 
@@ -150,7 +150,7 @@
 
                                 <div class="col-md-4 ref-no-edit">
                                     <label class="col-form-label" for="referance_no">Reference No <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="referance_no_edit" name="referance_no" type="text" placeholder="Enter Referance No" required>
+                                    <input class="form-control" id="referance_no_edit" name="referance_no" type="text" placeholder="Enter Referance No">
                                     <span class="text-danger is-invalid referance_no_err"></span>
                                 </div>
 
@@ -470,16 +470,16 @@
             var letterType = $("#letter_type option:selected").text();
 
             if (letterType === "Ordinary") {
-                $(".ref-no").hide();
+                // $(".ref-no").hide();
                 $(".barcode-no").hide();
 
-                $("#referance_no").removeAttr('required');
+                // $("#referance_no").removeAttr('required');
                 $("#barcode_no").removeAttr('required');
             } else {
-                $(".ref-no").show();
+                // $(".ref-no").show();
                 $(".barcode-no").show();
         
-                $("#referance_no").attr('required', 'required');
+                // $("#referance_no").attr('required', 'required');
                 $("#barcode_no").attr('required', 'required');
             }
         }
@@ -498,17 +498,17 @@
             var letterType = $("#editForm select[name='letter_type'] option:selected").text();
 
             if (letterType === "Ordinary") {
-                $(".ref-no-edit").hide();
+                // $(".ref-no-edit").hide();
                 $(".barcode-no-edit").hide();
                 $("#barcode_no_edit").removeAttr('required');
-                $("#referance_no_edit").removeAttr('required');
+                // $("#referance_no_edit").removeAttr('required');
             } else {
-                $(".ref-no-edit").show();
+                // $(".ref-no-edit").show();
                 $(".barcode-no-edit").show();
                 $("#barcode_no_edit").val('');
-                $("#referance_no_edit").val('');
+                // $("#referance_no_edit").val('');
                 $("#barcode_no_edit").attr('required', 'required');
-                $("#referance_no_edit").attr('required', 'required');
+                // $("#referance_no_edit").attr('required', 'required');
             }
         }
 

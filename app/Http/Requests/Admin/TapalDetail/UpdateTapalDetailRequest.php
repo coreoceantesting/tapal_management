@@ -28,7 +28,7 @@ class UpdateTapalDetailRequest extends FormRequest
             'city' => 'required|regex:/^[a-zA-Z\s]+$/',
             'address' => 'required',
             'pin' => 'required|digits:6',
-            'referance_no' => 'nullable',
+            'referance_no' => 'required',
             'barcode_no' => 'nullable',
         ];
     }
