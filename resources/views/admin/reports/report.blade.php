@@ -116,6 +116,12 @@
 
                     // Center the table on the page
                     doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                    // Center the text in all table cells
+                    doc.content[1].table.body.forEach(function(row) {
+                        row.forEach(function(cell) {
+                            cell.alignment = 'center'; // Center align each cell
+                        });
+                    });
                     
                     // Additional style changes (optional)
                     doc.styles.tableHeader.alignment = 'center';
