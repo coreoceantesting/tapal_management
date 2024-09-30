@@ -39,16 +39,17 @@
                             <thead>
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Name</th>
                                     {{-- <th>Letter Type</th>
                                     <th>Department</th> --}}
                                     @if($selected_letter_type !== '3') 
+                                        <th>Name</th>
                                         <th>Address</th>
                                         <th>City</th>
                                         <th>Pin</th>
                                         <th>Referance No</th>
                                         <th>Barcode No</th>                                        
                                     @else
+                                        <th>Department Name</th>
                                         <th>Name & Ref No</th>
                                     @endif
                                     {{-- <th>Action</th> --}}
@@ -69,7 +70,7 @@
                                             <td>{{ $list->barcode_no ?? 'NA' }}</td>
                                         @else
                                             <td>{{ $list->department_name }}</td>
-                                            <td>{{ $list->name }}  {{ $list->address }} {{ $list->referance_no }}</td>
+                                            <td>{{ $list->name }}  {{ $list->address }} - {{ $list->referance_no }}</td>
                                         @endif
                                         {{-- <td>
                                             <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $list->id }}"><i data-feather="edit"></i></button>

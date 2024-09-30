@@ -30,6 +30,11 @@ class TapalDetailController extends Controller
             $tapal_detail_query->where('tapal_details.department', auth()->user()->department);
         }
 
+        $departmentId = '';
+        if ( auth()->user()->roles->pluck('name')[0] == 'Department' ) {
+            $departmentId = auth()->user()->department;
+        }
+
         
         $tapal_detail = $tapal_detail_query->get();
         
@@ -41,6 +46,7 @@ class TapalDetailController extends Controller
             'tapal_detail' => $tapal_detail,
             'letter_type_list' => $letter_type_list,
             'department_list' => $department_list,
+            'selected_department' => $departmentId
         ]);
     }
 

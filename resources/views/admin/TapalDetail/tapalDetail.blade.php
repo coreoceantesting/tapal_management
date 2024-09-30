@@ -33,7 +33,9 @@
                                     <select class="form-control" name="department" id="department">
                                         <option value="">Select Department</option>
                                         @foreach ($department_list as $list)
-                                            <option value="{{ $list->id }}">{{ $list->department_name }}</option>
+                                            <option value="{{ $list->id }}" @if(isset($selected_department) && $selected_department == $list->id) 
+                                                selected 
+                                            @endif>{{ $list->department_name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="text-danger is-invalid department_err"></span>
